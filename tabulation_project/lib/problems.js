@@ -32,6 +32,21 @@ function stepper(nums) {
     }
     return table[0]
 }
+// function stepper(nums, memo={}) {
+//     const key = nums.toString()
+//     if (nums.length === 0) return true
+//     if (key in memo) return memo[key]
+//     let maxSteps = nums[0]
+//     for (let i = 1 ; i <= maxSteps ; i++) {
+//         if (stepper(nums.slice(i),memo)) {
+//             memo[key] = true
+//             return true
+//         }
+//     }
+//     memo[key] = false
+//     return false
+// }
+
 
 
 // Write a function, maxNonAdjacentSum(nums), that takes in an array of nonnegative numbers.
@@ -44,17 +59,27 @@ function stepper(nums) {
 //
 // maxNonAdjacentSum([2, 7, 9, 3, 4])   // => 15, because 2 + 9 + 4
 // maxNonAdjacentSum([4,2,1,6])         // => 10, because 4 + 6 
-function maxNonAdjacentSum(nums) {
-    // let sums = new Array()
-    // for (let i = 0 ; i < nums.length - 2 ; i++) {
-    //     for (let j = i+2 ; j < nums.length ; j++) {
-    //         sums.push(nums[i] + nums[j])
-    //         console.log(sums)
-    //     }
-    // }
-    // return Math.max(...sums)
-}
+// function maxNonAdjacentSum(nums, memo = {}) {
+//     if (!nums.length) return 0
+//     const key = nums.toString()
+//     if (key in memo) return memo[key]
+//     for (let i = 0 ; i < nums.length ; i++) {
+//         memo[key] = Math.max(nums[0] + maxNonAdjacentSum(nums.slice(2), memo), nums[0] + maxNonAdjacentSum(nums.slice(3), memo))
+//     }
+//     return memo[key]
+// }
 
+function maxNonAdjacentSum(nums) {
+    if (nums.length === 0) return 0;
+    if (nums.length === 1) return nums[0];
+    let table = new Array(nums.length).fill(0)
+    table[0] = nums[0]
+    table[1] = Math.max(nums[0],nums[1])
+    for (let i = 2 ; i < table.length ; i++) {
+        table[i] = Math.max(nums[i] + (table[i-2] || 0), nums[i] + (table[i-3] || 0))
+    }
+    return Math.max(table[table.length - 1], table[table.length - 2])
+}
 
 // Write a function, minChange(coins, amount), that accepts an array of coin values
 // and a target amount as arguments. The method should the minimum number of coins needed
@@ -69,7 +94,7 @@ function maxNonAdjacentSum(nums) {
 // minChange([1, 5, 10, 25], 15)    // => 2, because 10 + 5 = 15
 // minChange([1, 5, 10, 25], 100)   // => 4, because 25 + 25 + 25 + 25 = 100
 function minChange(coins, amount) {
-
+    const table = new Array()
 }
 
 
