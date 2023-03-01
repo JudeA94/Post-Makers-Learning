@@ -168,7 +168,6 @@ function fileFinder(directories, targetFile) {
             return true;
         }
     }
-
     return false;
 }
 
